@@ -1,0 +1,21 @@
+﻿.submit {
+    padding: 3% 10%;
+}
+
+.clear {
+    padding: 3% 10%;
+    float: right;
+}
+
+.dob-icon {
+    font-size: 1.5em;
+}
+
+.table {
+    width: 100%;
+}
+
+body {
+    padding-top: 10%;
+    padding-bottom: 20%;
+}

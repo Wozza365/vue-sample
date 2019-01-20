@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>File Demo</title>
+    <link rel="stylesheet" href="./css/bulma.min.css">
+    <link rel="stylesheet" href="./css/site.css" />
+
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script defer src="js/vue.js"></script>
+    <script defer src="js/vue-resource.js"></script>
+
+    <script defer src="js/filters.js"></script>
+    <script defer src="./js/components/hello-world.js"></script>
+    <script defer src="./js/components/input-field.js"></script>
+
+    <script defer src="js/app.js"></script>
+</head>
+
+<body>
+    <section class="section" id="app">
+        <div class="container">
+            <hello-world title="Hello, World!"></hello-world>
+            <input-field title="Username" len="20" v-bind:valid="validUsername" v-on:input-change="username = $event"></input-field>
+            <!-- <div class="field">
+                <label class="label is-large">Username</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input is-large" type="text" placeholder="Username" maxlength="20" v-model="username" v-bind:class="{ 'is-success': validUsername, 'is-danger': !validUsername && username }">
+                    <span class="icon is-large is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <span class="icon is-large is-right" v-show="username">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+            </div> -->
+            <div class="field">
+                <label class="label is-large">Password</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input is-large" type="text" placeholder="Password" maxlength="50" v-model="password" v-bind:class="{ 'is-success': validPassword, 'is-danger': !validPassword && password }">
+                    <span class="icon is-large is-left">
+                        <i class="fas fa-unlock-alt"></i>
+                    </span>
+                    <span class="icon is-large is-right" v-show="password">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+            </div>
+            <br />
+            <a class="button is-info is-large submit" v-bind:class="{ 'is-loading': false }" v-on:click="canGetFiles && getFiles()" :disabled="!canGetFiles">Get Files</a>
+            <br />
+            <label class="label is-large" v-show="showTable || files.length > 0">Your Files</label>
+            <table class="table is-hoverable" v-show="showTable || files.length > 0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>File Size</th>
+                        <th>Type</th>
+                        <th>File ID</th>
+                        <th>Date Modified</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="file in files">
+                        <td>{{ file.name }}</td>
+                        <td>{{ file.fileSize | file-size }}</td>
+                        <td>{{ file.type }}</td>
+                        <td>{{ file.dateModified | date }}</td>
+                        <td>{{ file.id }}</td>
+                        <td>
+                            <a class="button is-info submit" v-bind:class="{ 'is-loading': false }" v-on:click="canGetFiles && getFiles()" :disabled="!canGetFiles">Get Files</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
+</html>
+
+<script type="text/x-template" id="hello-world-template">
+    <h1>
+        {{ title }}
+    </h1>
+</script>
+
+<script type="text/x-template" id="input-field-template">
+    <div class="field">
+            <label class="label is-large">{{ title }}</label>
+            <div class="control has-icons-left has-icons-right">
+                <input class="input is-large" type="text" 
+                    v-bind:placeholder="title" 
+                    v-bind:maxlength="len"
+                    v-bind:value="value"
+                    v-on:input="$emit('input-change', $event.target.value)"
+                    v-bind:class="{ 'is-success': valid, 'is-danger': !valid }"
+                />
+                <span class="icon is-large is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                <span class="icon is-large is-right" v-show="value">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+</script>
